@@ -1,14 +1,14 @@
 const express = require('express');
 const app = express();
-const dotenv = require('dotenv');
+//const dotenv = require('dotenv');
 
 
-dotenv.config();
+//dotenv.config();
 
 const port = process.env.PORT || 3000;
 
 app.get('/', (req, res) =>{
-    res.send("We are lit!");
+    res.send("We are lit2!");
 })
 
 app.listen(port, ()=> {
