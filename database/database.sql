@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXIST "customers" (
+CREATE TABLE IF NOT EXISTS "customers" (
   "id" SERIAL PRIMARY KEY,
   "first_name" varchar,
   "last_name" varchar,
@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXIST "customers" (
   "is_admin" boolean
 );
 
-CREATE TABLE IF NOT EXIST "address" (
+CREATE TABLE IF NOT EXISTS "address" (
   "id" SERIAL PRIMARY KEY,
   "customer_id" int,
   "zipcode" int,
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXIST "address" (
   "mobile_number" int
 );
 
-CREATE TABLE IF NOT EXIST "products" (
+CREATE TABLE IF NOT EXISTS "products" (
   "id" SERIAL PRIMARY KEY,
   "item_name" varchar UNIQUE,
   "description" text,
@@ -27,28 +27,28 @@ CREATE TABLE IF NOT EXIST "products" (
   "price" float
 );
 
-CREATE TABLE IF NOT EXIST "Order" (
+CREATE TABLE IF NOT EXISTS "Order" (
   "customer_id" int,
   "id" SERIAL PRIMARY KEY,
   "date_of_purchase" date,
   "total_price" int
 );
 
-CREATE TABLE IF NOT EXIST "order_products" (
+CREATE TABLE IF NOT EXISTS "order_products" (
   "order_id" int,
   "product_id" int,
   "quantity" int,
   "total_price" int
 );
 
-CREATE TABLE IF NOT EXIST "Cart" (
+CREATE TABLE IF NOT EXISTS "Cart" (
   "customer_id" int,
   "id" SERIAL PRIMARY KEY,
   "date_of_purchase" date,
   "total_price" int
 );
 
-CREATE TABLE IF NOT EXIST "cart_products" (
+CREATE TABLE IF NOT EXISTS "cart_products" (
   "cart_id" int,
   "product_id" int,
   "quantity" int,
