@@ -9,8 +9,7 @@ CREATE TABLE IF NOT EXISTS "customers" (
 );
 
 CREATE TABLE IF NOT EXISTS "address" (
-  "id" SERIAL PRIMARY KEY,
-  "customer_id" int,
+  "customer_id" int REFERENCES customers(id),
   "zipcode" int,
   "country" varchar,
   "city" varchar,
@@ -28,45 +27,33 @@ CREATE TABLE IF NOT EXISTS "products" (
 );
 
 CREATE TABLE IF NOT EXISTS "order" (
-  "customer_id" int,
-  "id" SERIAL PRIMARY KEY UNIQUE,
+  "customer_id" int REFERENCES customers(id),
+  "id" SERIAL PRIMARY KEY,
   "date_of_purchase" date,
   "total_price" int
 );
 
 CREATE TABLE IF NOT EXISTS "order_products" (
-  "order_id" int,
-  "product_id" int,
+  "order_id" int REFERENCES "order"(id),
+  "product_id" int REFERENCES products(id),
   "quantity" int,
   "total_price" int,
   UNIQUE(order_id, product_id)
 );
 
 CREATE TABLE IF NOT EXISTS "cart" (
-  "customer_id" int,
+  "customer_id" int REFERENCES customers(id),
   "id" SERIAL PRIMARY KEY,
   "date_of_purchase" date,
   "total_price" int
 );
 
 CREATE TABLE IF NOT EXISTS "cart_products" (
-  "cart_id" int,
-  "product_id" int,
+  "cart_id" int REFERENCES cart(id),
+  "product_id" int REFERENCES products(id),
   "quantity" int,
   "total_price" int,
   UNIQUE(cart_id, product_id)
 );
 
-ALTER TABLE "address" ADD FOREIGN KEY ("customer_id") REFERENCES "customers" ("id");
 
-ALTER TABLE "order" ADD FOREIGN KEY ("customer_id") REFERENCES "customers" ("id");
-
-ALTER TABLE "order" ADD FOREIGN KEY ("id") REFERENCES "order_products" ("order_id");
-
-ALTER TABLE "order_products" ADD FOREIGN KEY ("product_id") REFERENCES "products" ("id");
-
-ALTER TABLE "cart" ADD FOREIGN KEY ("customer_id") REFERENCES "customers" ("id");
-
-ALTER TABLE "cart" ADD FOREIGN KEY ("id") REFERENCES "cart_products" ("cart_id");
-
-ALTER TABLE "cart_products" ADD FOREIGN KEY ("product_id") REFERENCES "products" ("id");
