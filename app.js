@@ -5,8 +5,14 @@ const pool = require('./database');
 const port = 3000;
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
-const userRouter = require('./src/routes');
 const passport = require('passport');
+
+
+const userRouter = require('./src/routes/routes');
+const addressRouter = require('./src/routes/addressrouter');
+const productRouter = require('./src/routes/productrouter');
+const cartRouter = require('./src/routes/cartrouter');
+const orderRouter = require('./src/routes/orderrouter');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -21,7 +27,7 @@ app.use(session({
         createTableIfMissing: true,
     }),
     cookie: {
-        maxAge: 1000*60*60*24
+        maxAge: 1000*60*60,
     }
 }));
 
@@ -40,6 +46,10 @@ app.get('/', (req, res) =>{
 });
 
 app.use('/users', userRouter);
+app.use('/addresses', addressRouter);
+app.use('/products', productRouter);
+app.use('/cart', cartRouter);
+app.use('/orders', orderRouter);
 
 app.listen(port, ()=> {
     console.log(`App is listening on 3000`);

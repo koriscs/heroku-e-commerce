@@ -1,8 +1,8 @@
 const { Router } = require('express');
 const userRouter = Router();
-const controller = require('./controller');
+const controller = require('../controllers/controller');
 const passport = require('passport');
-const { checkAuthenticated, checkNotAuthenticated, initialize} = require('../passport');
+const { checkAuthenticated, initialize} = require('../../passport');
 
 
 //const initializePassport = require("../passport");

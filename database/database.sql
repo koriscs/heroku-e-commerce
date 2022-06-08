@@ -26,34 +26,32 @@ CREATE TABLE IF NOT EXISTS "products" (
   "price" float
 );
 
-CREATE TABLE IF NOT EXISTS "order" (
-  "customer_id" int REFERENCES customers(id),
-  "id" SERIAL PRIMARY KEY,
-  "date_of_purchase" date,
-  "total_price" int
-);
+CREATE TABLE cart(
+id  SERIAL PRIMARY KEY,
+customer_id int REFERENCES customers(id),
+product_id int REFERENCES products(id),
+size varchar(3),
+quantity int,
+UNIQUE(customer_id, product_id, size)
+ );
 
-CREATE TABLE IF NOT EXISTS "order_products" (
-  "order_id" int REFERENCES "order"(id),
-  "product_id" int REFERENCES products(id),
-  "quantity" int,
-  "total_price" int,
-  UNIQUE(order_id, product_id)
-);
+CREATE TABLE orders(
+id  SERIAL PRIMARY KEY,
+customer_id int REFERENCES customers(id),
+customer_address text,
+date_of_purchase timestamp,
+total_price money
+ );
 
-CREATE TABLE IF NOT EXISTS "cart" (
-  "customer_id" int REFERENCES customers(id),
-  "id" SERIAL PRIMARY KEY,
-  "date_of_purchase" date,
-  "total_price" int
-);
+ CREATE TABLE order_details (
+   order_id int REFERENCES orders(id),
+   product_name varchar,
+   product_size varchar(3),
+   product_quantity int,
+ );
+ 
 
-CREATE TABLE IF NOT EXISTS "cart_products" (
-  "cart_id" int REFERENCES cart(id),
-  "product_id" int REFERENCES products(id),
-  "quantity" int,
-  "total_price" int,
-  UNIQUE(cart_id, product_id)
-);
+
+
 
 

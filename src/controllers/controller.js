@@ -1,5 +1,5 @@
-const pool = require('../database');
-const queries = require('./queries');
+const pool = require('../../database');
+const queries = require('../queries');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
@@ -9,7 +9,7 @@ const registerPage =(req, res) =>{
 }
 
 const loginPage = (req, res) =>{
-    res.status(200).send(`You are sucessfully logged in  as ${req.body.user}!`);
+    res.status(200).send(`You are sucessfully logged in!`);
 }
 
 const registerUser = (req, res) =>{
@@ -26,16 +26,13 @@ const registerUser = (req, res) =>{
                 [first_name, last_name, username, hashedPassword, email],
                 (error,results) =>{
                     if(error) throw error;})
-
+                    res.status(201).send("User created!");
                 }
             })
-    res.status(201).send("User created!");
+    
     
 }
 
-const getDashboard = (req, res) => {
-    res.render("dashboard.ejs", {user: req.user.username});
-}
 
 const logout = (req, res) => {
     req.logout(function(err) {
