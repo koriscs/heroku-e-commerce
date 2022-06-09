@@ -49,5 +49,5 @@ app.use('/cart', cartRouter);
 app.use('/orders', orderRouter);
 
 app.listen(PORT, ()=> {
-    console.log(`App is listening on 3000`);
+    console.log(`App is listening on heroku`);
 })
