@@ -1,0 +1,436 @@
+openapi: 3.0.1
+info:
+  title: codecademy_e_commerce
+  version: 1.0.0
+  description: RESTAPI for a webshop
+paths:
+  /users/register:
+    summary: Register operations
+    get:
+      summary: loads loginpage
+      description: helps for register input
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Users
+    post:
+      summary: Sends register information
+      description: ''
+      operationId: ''
+      requestBody:
+        description: A new customer registration
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Register
+  /users/login:
+    summary: Login oprations
+    post:
+      summary: Log in customer
+      description: ''
+      operationId: ''
+      requestBody:
+        description: Login credentials
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Login
+  /users/logout:
+    summary: Logout
+    get:
+      summary: Logs a user out if logged in
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Users
+  /users/:userId:
+    summary: User operation
+    get:
+      summary: Gives a specific customer based on customer_id
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Users
+  /addresses:
+    summary: Address operations
+    get:
+      summary: Gives all addresses
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                get_addresses:
+                  value: |-
+                    [
+                        {
+                            "customer_id": 2,
+                            "zipcode": 1158,
+                            "country": "Hungary",
+                            "city": "Budapest",
+                            "street_name": "Tabornok",
+                            "street_number": "85",
+                            "mobile_number": "36304582022"
+                        }
+                    ]
+      tags:
+        - Addresses
+  /addresses/:customer_id:
+    summary: Address operations
+    get:
+      summary: Gets specific customers address
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                get_address:
+                  value: |2
+
+                        {
+                            "customer_id": 2,
+                            "zipcode": 1158,
+                            "country": "Hungary",
+                            "city": "Budapest",
+                            "street_name": "Tabornok",
+                            "street_number": "85",
+                            "mobile_number": "36304582022"
+                        }
+      tags:
+        - Addresses
+    put:
+      summary: Updates customers address
+      description: ''
+      operationId: ''
+      requestBody:
+        description: Update address
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Addresses'
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Addresses
+    post:
+      summary: Creates new Address information for customer
+      description: ''
+      operationId: ''
+      requestBody:
+        description: Creates new Address for customer
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Addresses
+  /products:
+    summary: Product operations
+    get:
+      summary: Get all products
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                get_all_products:
+                  value: |-
+                    [
+                        {
+                            "id": 1,
+                            "item_name": "Hat",
+                            "description": "Looks good or just protects you from rain",
+                            "image_url": null,
+                            "price": 3500
+                        },
+                        {
+                            "id": 2,
+                            "item_name": "Jacket",
+                            "description": "Comes in handy when it is cold",
+                            "image_url": null,
+                            "price": 13500
+                        },
+                    ]
+      tags:
+        - Products
+    post:
+      summary: Adds Product
+      description: ''
+      operationId: ''
+      requestBody:
+        description: Creates new product
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Products'
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Products
+  /products/:productId:
+    summary: Product operations
+    get:
+      summary: Gets specific product by id
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                get_products:
+                  value: |-
+                    {
+                                                "id": 2,
+                                                "item_name": "Jacket",
+                                                "description": "Comes in handy when it is cold",
+                                                "image_url": null,
+                                                "price": 13500
+                                            },
+      tags:
+        - Products
+    put:
+      summary: Updates Product
+      description: ''
+      operationId: ''
+      requestBody:
+        description: Updates product
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Products'
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Products
+    delete:
+      summary: Deletes Product
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Products
+  /cart/:customerId:
+    summary: Cart operations
+    get:
+      summary: Gets a customers carts
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                get_cart:
+                  value: |-
+                    {
+                            "id": 2,
+                            "customer_id": 2,
+                            "product_id": 4,
+                            "size": "L",
+                            "quantity": 3,
+                            "sub_total": "$23,970.00"
+                        }
+      tags:
+        - Cart
+    post:
+      summary: Adding new product or size to cart
+      description: ''
+      operationId: ''
+      requestBody:
+        description: Adds new item to cart
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cart'
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Cart
+  /:customerId/:cartId:
+    summary: cart operations
+    put:
+      summary: Updates quantity in cart
+      description: if sets to 0 deletes cart
+      operationId: ''
+      requestBody:
+        description: Updates quantity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Quantity'
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Cart
+    delete:
+      summary: Deletes cart
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Cart
+  /:customerId/checkout:
+    summary: Cart operations
+    get:
+      summary: Checks every item from your cart to Orders and deletes Carts
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - Cart
+  /orders/:customerId:
+    summary: Order operations
+    get:
+      summary: Gets all orders from a customers
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                get_orders:
+                  value: |2-
+                     {
+                            "id": 2,
+                            "customer_id": 2,
+                            "customer_address": "1158, Hungary Budapest Tabornok street 85.",
+                            "date_of_purchase": "2022-06-09T12:54:20.925Z",
+                            "total_price": "$39,950.00"
+                        }
+      tags:
+        - Orders
+  /orders/:customerId/:orderId:
+    summary: Order operations
+    get:
+      summary: Gets a specific order by orderID
+      description: ''
+      operationId: ''
+      responses:
+        default:
+          description: Default error sample response
+          content:
+            application/json:
+              examples:
+                get_order:
+                  value: |2-
+                     {
+                            "id": 2,
+                            "customer_id": 2,
+                            "customer_address": "1158, Hungary Budapest Tabornok street 85.",
+                            "date_of_purchase": "2022-06-09T12:54:20.925Z",
+                            "total_price": "$39,950.00"
+                        }
+      tags:
+        - Orders
+components:
+  schemas:
+    Register:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        is_admin:
+          type: boolean
+    Login:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    Addresses:
+      type: object
+      properties:
+        zipcode:
+          type: integer
+        country:
+          type: string
+        city:
+          type: string
+        street_name:
+          type: string
+        street_number:
+          type: integer
+        mobile_number:
+          type: string
+    Products:
+      type: object
+      properties:
+        item_name:
+          type: string
+        description:
+          type: string
+        image_url:
+          type: string
+        price:
+          type: integer
+    Cart:
+      type: object
+      properties:
+        product_id:
+          type: number
+        size:
+          type: string
+        quantity:
+          type: number
+    Quantity:
+      type: object
+      properties:
+        quantity:
+          type: number
+      xml:
+        name: Register

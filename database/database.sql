@@ -32,6 +32,7 @@ customer_id int REFERENCES customers(id),
 product_id int REFERENCES products(id),
 size varchar(3) NOT NULL,
 quantity int NOT NULL,
+sub_total money,
 UNIQUE(customer_id, product_id, size)
  );
 
