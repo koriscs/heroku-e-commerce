@@ -7,5 +7,5 @@ const { checkAuthenticated } = require('../../passport');
 addressRouter.get('/', checkAuthenticated, controller.getAllAddress, (req, res) =>{});
 addressRouter.get('/:customer_id',checkAuthenticated, controller.getAddress, (req, res) =>{});
 addressRouter.put('/:customer_id',checkAuthenticated, controller.updateAddress, (req, res) =>{});
-
+addressRouter.post('/:customer_id', checkAuthenticated, controller.addAddress, (req, res) =>{});
 module.exports = addressRouter;

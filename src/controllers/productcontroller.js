@@ -1,5 +1,6 @@
 const pool = require('../../database');
 const queries = require('../queries');
+const validator = require('validator');
 
 const getAllProducts = (req, res) =>{
     if(req.user.is_admin) {
@@ -24,6 +25,9 @@ const getProduct = (req, res) =>{
 
 const addProduct = (req, res) =>{
     const {item_name, description, image_url, price} = req.body;
+    if(!item_name || !description || isNaN(price) ) {
+        return res.status(400).json({msg: "Pls give all informations correctly!"});
+    }
 
     pool.query(queries.getProductByName, [item_name], (error, results) =>{
         if(error) throw error;
@@ -46,6 +50,9 @@ const updateProduct =(req, res) =>{
         return res.status(401).json({msg: "You are not authorized to get this User's data!"});
     }
     const {item_name, description, image_url, price} = req.body;
+    if(!item_name || !description || isNaN(price) ) {
+        return res.status(400).json({msg: "Pls give all informations correctly!"});
+    }
     pool.query(queries.getProduct, [id], (error, results) =>{
         if(error) throw error;
         if(!results.rows.length) {

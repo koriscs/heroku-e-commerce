@@ -30,12 +30,32 @@ const getAddress = (req, res) =>{
     })
 }
 
+const addAddress = (req, res) =>{
+    const id = parseInt(req.params.customer_id);
+  
+    if(!req.user.is_admin && req.user.id !== id) {
+        return res.status(401).json({msg: "You are not authorized to get this User's data!"});
+    }
+    const {zipcode, country, city, street_name, street_number, mobile_number} = req.body;
+
+    if(!zipcode || !country || city || isNaN(street_number) || !street_name || !mobile_number) {
+        return res.status(400).json({msg: "Pls give all informations correctly!"});
+    }
+    pool.query(queries.addAddress,[id, zipcode, country, city, street_name, street_number, mobile_number], (error, results) =>{
+        if (error) throw error;
+        res.status(201).json({msg: "Address infomrations sucesfully created"})
+    } )
+}
+
 const updateAddress =(req, res) =>{
     const id = parseInt(req.params.customer_id);
     if(!req.user.is_admin && req.user.id !== id) {
         return res.status(401).json({msg: "You are not authorized to get this User's data!"});
     }
     const {zipcode, country, city, street_name, street_number, mobile_number} = req.body;
+    if(!zipcode || !country || city || isNaN(street_number) || !street_name || !mobile_number) {
+        return res.status(400).json({msg: "Pls give all informations correctly!"});
+    }
     pool.query(queries.getAddress, [id], (error, results) =>{
         if (error) throw error;
         if(!results.rows.length) {
@@ -54,5 +74,6 @@ const updateAddress =(req, res) =>{
 module.exports = {
     getAllAddress,
     getAddress,
-    updateAddress
+    updateAddress,
+    addAddress
 }

@@ -8,6 +8,9 @@ const addItemToCart = (req, res) =>{
        return res.status(401).json({msg: "You are not authorized to add to this Cart!"});
     }
     const {product_id, size, quantity} = req.body;
+    if(!product_id || !size || isNaN(quantity) ) {
+        return res.status(400).json({msg: "Pls give all informations correctly!"});
+    }
     //Getting the price of an item
     pool.query(queries.getPrice, [product_id], (error, results) =>{
         if(error) throw error;
@@ -67,8 +70,11 @@ const checkOut = (req, res) =>{
 
             pool.query(queries.getAddress, [id], (error, results) =>{
                 if (error) throw error;
+                if(!results.rows.length) {
+                    return res.status(404).json({msg: "There is no address information for this user pls give address information for the user first!"});
+                } else {
                 const addressObject = results.rows[0];
-                const address = `${addressObject.zipcode}, ${addressObject.country} ${addressObject.city} ${addressObject.street_name} street ${addressObject.stree_number}.`;
+                const address = `${addressObject.zipcode}, ${addressObject.country} ${addressObject.city} ${addressObject.street_name} street ${addressObject.street_number}.`;
                 pool.query(queries.getTotal, [id], (error, results) =>{
                     if(error) throw error;
                     const total_price = results.rows[0].total_price;
@@ -88,6 +94,7 @@ const checkOut = (req, res) =>{
                         res.status(200).json({msg:"Your order was sucesfully added!"})                        
                     })
                 })
+              }
                 
             })    
         }
@@ -126,12 +133,33 @@ const updateCart = (req, res) =>{
         })
         }
     })
+}
 
+const deleteCart = (req, res) =>{
+    const id = parseInt(req.params.customerId);
+    const cartId = parseInt(req.params.cartId); 
+
+    if(req.user.id !== id && !req.user.is_admin) {
+        return res.status(401).json({msg: "You are not authorized to see this Cart!"});
+     }
+     pool.query(queries.findCart, [cartId], (error, results) =>{
+         if (error) throw error;
+         if(!results.rows.length) {
+             return res.status(404).json({msg: "We could not find a cart with this id!"})
+         } else {
+             pool.query(queries.deleteCart, [cartId], (error, results) =>{
+                 if (error) throw error;
+                 return res.status(200).json({msg:"Your cart was deleted"});
+             })
+         }
+     })
+     
 }
 
 module.exports = {
   addItemToCart,
   getCart,
   checkOut,
-  updateCart
+  updateCart,
+  deleteCart
 }
